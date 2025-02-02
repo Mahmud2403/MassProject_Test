@@ -87,9 +87,12 @@ fun HomeScreen(
                     result = result
                 )
             }
-            item{
+            item {
                 if (uiState.error != null) {
-                    Text(text = uiState.error ?: "Unknown error")
+                    Text(
+                        text = uiState.error ?: "Unknown error",
+                        color = Color.Black,
+                    )
                 }
             }
         }

@@ -1,5 +1,6 @@
 package com.example.massproject_test.base
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -17,9 +18,15 @@ import com.example.massproject_test.R
 @Preview
 @Composable
 private fun AdjustableImagePreview() {
-    AdjustableImage(
-        model = null
-    )
+    Column {
+        AdjustableImage(
+            model = null
+        )
+        AdjustableImage(
+            model = null,
+            isDead = true,
+        )
+    }
 }
 
 @Composable
