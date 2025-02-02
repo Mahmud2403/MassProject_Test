@@ -56,7 +56,6 @@ fun HomeScreen(
                     ) {
                         CircularProgressIndicator()
                     }
-
                 }
                 CustomText(
                     modifier = Modifier.padding(
