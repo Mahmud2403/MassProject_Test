@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MassProject_Test</string>
+    <string name="http_status_unknown_developer_message">Unknown Error</string>
+</resources>
