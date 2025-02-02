@@ -30,7 +30,6 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             homeRepository.getAllCharacters().collectAsResult(
                 onLoading = {
-                    Log.d("MyTag", "Loading")
                     _uiState.update {
                         it.copy(
                             isLoading = true
@@ -39,7 +38,6 @@ class HomeViewModel @Inject constructor(
                 },
                 onSuccess = { requestResult ->
                     requestResult.data?.let { character ->
-                        Log.d("MyTag", "${character}")
                         _uiState.update {
                             it.copy(
                                 isLoading = false,
@@ -48,11 +46,11 @@ class HomeViewModel @Inject constructor(
                         }
                     }
                 },
-                onError = { _, _ ->
-                    Log.d("MyTag", "Error")
+                onError = { ex, _ ->
                     _uiState.update {
                         it.copy(
-                            isLoading = false
+                            isLoading = false,
+                            error = ex.message
                         )
                     }
                 }
@@ -63,5 +61,6 @@ class HomeViewModel @Inject constructor(
 
 data class HomeUiState(
     val isLoading: Boolean = false,
+    val error: String? = null,
     val character: Character? = null,
 )
