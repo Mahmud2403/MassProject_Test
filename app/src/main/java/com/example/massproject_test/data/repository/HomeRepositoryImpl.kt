@@ -1,22 +1,18 @@
 package com.example.massproject_test.data.repository
 
-import android.util.Log
 import com.example.massproject_test.common.RequestResponseMergeStrategy
-import com.example.massproject_test.data.local.dao.MassDao
-import com.example.massproject_test.data.local.model.CharacterEntity
-import com.example.massproject_test.data.network.MassApi
 import com.example.massproject_test.common.RequestResult
 import com.example.massproject_test.common.map
 import com.example.massproject_test.common.toCharacter
 import com.example.massproject_test.common.toCharacterEntity
 import com.example.massproject_test.common.toRequestResult
+import com.example.massproject_test.data.local.dao.MassDao
+import com.example.massproject_test.data.local.model.CharacterEntity
+import com.example.massproject_test.data.network.MassApi
 import com.example.massproject_test.data.network.model.CharacterDto
-import com.example.massproject_test.data.network.model.ResponseDto
-import com.example.massproject_test.data.network.model.ResultDto
 import com.example.massproject_test.domain.model.Character
 import com.example.massproject_test.domain.repository.HomeRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
@@ -38,15 +34,10 @@ class HomeRepositoryImpl @Inject constructor(
 
         return cache.combine(network, mergeStrategy::merge)
             .flatMapLatest { result ->
-                Log.d("MyTag", "result = ${result.map {  }}")
                 if (result is RequestResult.Success) {
                     dao.observeCharacter()
-                        .map {
-                            Log.d("MyTag", "it = $it")
-                            it.toCharacter() }
-                        .map {
-                            Log.d("MyTag", "it2 = $it")
-                            RequestResult.Success(it) }
+                        .map { it.toCharacter() }
+                        .map {RequestResult.Success(it) }
                 } else {
                     flowOf(result)
                 }
@@ -88,6 +79,4 @@ class HomeRepositoryImpl @Inject constructor(
             result.map { entity -> entity.toCharacter() }
         }
     }
-
-
 }
