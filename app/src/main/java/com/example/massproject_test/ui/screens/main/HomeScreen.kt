@@ -1,12 +1,17 @@
 package com.example.massproject_test.ui.screens.main
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -42,14 +47,29 @@ fun HomeScreen(
             .fillMaxSize()
             .systemBarsPadding(),
         topBar = {
-            CustomText(
-                modifier = Modifier.padding(
-                    all = 24.dp
-                ),
-                text = "Characters",
-                fontSize = 31.sp,
-                fontWeight = FontWeight(700)
-            )
+            Column {
+                if (uiState.isLoading){
+                    Box(
+                        modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator(
+                            modifier = Modifier
+                                .size(24.dp)
+                        )
+                    }
+                }
+                CustomText(
+                    modifier = Modifier.padding(
+                        all = 24.dp
+                    ),
+                    text = "Characters",
+                    fontSize = 31.sp,
+                    fontWeight = FontWeight(700)
+                )
+            }
         },
         containerColor = Color.White
     ) { padding ->
@@ -66,6 +86,14 @@ fun HomeScreen(
                 CharacterCard(
                     result = result
                 )
+            }
+            item {
+                if (uiState.error != null) {
+                    Text(
+                        text = uiState.error ?: "Unknown error",
+                        color = Color.Black,
+                    )
+                }
             }
         }
     }
